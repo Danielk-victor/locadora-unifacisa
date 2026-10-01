@@ -1,0 +1,29 @@
+<section class="hero">
+  <h1>Bem-vindo à <span class="destaque">Locadora Unifacisa</span></h1>
+  <p class="muted">
+    Gerencie o catálogo de filmes e jogos: cadastre, consulte, atualize e remova itens.
+  </p>
+</section>
+
+@if (erro()) {
+  <div class="alerta alerta-erro">
+    <span>{{ erro() }}</span>
+    <button type="button" class="btn btn-sm" (click)="carregar()">Tentar novamente</button>
+  </div>
+}
+
+<section class="grid-2">
+  <a routerLink="/filmes" class="card card-link card-filmes">
+    <span class="emoji">🎬</span>
+    <h2>Filmes</h2>
+    <p class="muted">{{ totalFilmes() === null ? '—' : totalFilmes() + ' no catálogo' }}</p>
+    <span class="link">Ver catálogo →</span>
+  </a>
+
+  <a routerLink="/jogos" class="card card-link card-jogos">
+    <span class="emoji">🎮</span>
+    <h2>Jogos</h2>
+    <p class="muted">{{ totalJogos() === null ? '—' : totalJogos() + ' no catálogo' }}</p>
+    <span class="link">Ver catálogo →</span>
+  </a>
+</section>

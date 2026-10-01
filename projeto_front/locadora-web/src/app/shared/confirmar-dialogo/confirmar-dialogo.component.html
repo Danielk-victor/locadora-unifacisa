@@ -1,0 +1,14 @@
+<div class="overlay" (click)="cancelar.emit()">
+  <div class="dialogo" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <h3>{{ titulo() }}</h3>
+    <p>{{ mensagem() }}</p>
+    <div class="acoes">
+      <button type="button" class="btn" (click)="cancelar.emit()" [disabled]="processando()">
+        Cancelar
+      </button>
+      <button type="button" class="btn btn-perigo" (click)="confirmar.emit()" [disabled]="processando()">
+        {{ processando() ? 'Excluindo...' : 'Excluir' }}
+      </button>
+    </div>
+  </div>
+</div>

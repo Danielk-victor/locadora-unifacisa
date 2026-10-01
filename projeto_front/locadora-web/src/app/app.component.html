@@ -1,0 +1,19 @@
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a routerLink="/" class="brand">
+      <span class="brand-logo">▶</span>
+      <span>Locadora <strong class="destaque">Unifacisa</strong></span>
+    </a>
+    <nav>
+      <a routerLink="/" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Início</a>
+      <a routerLink="/filmes" routerLinkActive="ativo">Filmes</a>
+      <a routerLink="/jogos" routerLinkActive="ativo">Jogos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <router-outlet />
+</main>
+
+<footer class="container rodape">© {{ ano }} Locadora Unifacisa</footer>

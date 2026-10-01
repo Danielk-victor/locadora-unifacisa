@@ -1,0 +1,59 @@
+<div class="page-head">
+  <div>
+    <h1>{{ editando ? 'Editar jogo' : 'Novo jogo' }}</h1>
+    <p class="muted">Preencha os dados abaixo.</p>
+  </div>
+  <a routerLink="/jogos" class="btn">← Voltar</a>
+</div>
+
+@if (carregando()) {
+  <div class="estado">Carregando...</div>
+} @else {
+  @if (erro()) {
+    <div class="alerta alerta-erro">{{ erro() }}</div>
+  }
+
+  <form class="card form" [formGroup]="form" (ngSubmit)="salvar()" novalidate>
+    <div class="campo campo-full">
+      <label for="titulo">Título</label>
+      <input id="titulo" formControlName="titulo" placeholder="Ex.: Interestelar" (input)="limparErroServidor('titulo')" />
+      @if (erroDo('titulo'); as m) { <small class="erro">{{ m }}</small> }
+    </div>
+
+    <div class="campo">
+      <label for="genero">Gênero</label>
+      <input id="genero" formControlName="genero" placeholder="Ex.: Ficção científica" (input)="limparErroServidor('genero')" />
+      @if (erroDo('genero'); as m) { <small class="erro">{{ m }}</small> }
+    </div>
+
+    <div class="campo">
+      <label for="plataforma">Plataforma</label>
+      <input id="plataforma" formControlName="plataforma" placeholder="Ex.: PlayStation 5" (input)="limparErroServidor('plataforma')" />
+      @if (erroDo('plataforma'); as m) { <small class="erro">{{ m }}</small> }
+    </div>
+
+    <div class="campo">
+      <label for="anoLancamento">Ano de lançamento</label>
+      <input id="anoLancamento" type="number" formControlName="anoLancamento" placeholder="Ex.: 2014" (input)="limparErroServidor('anoLancamento')" />
+      @if (erroDo('anoLancamento'); as m) { <small class="erro">{{ m }}</small> }
+    </div>
+
+    <div class="campo">
+      <label for="valorLocacao">Valor da locação (R$)</label>
+      <input id="valorLocacao" type="number" step="0.01" formControlName="valorLocacao" placeholder="Ex.: 9.90" (input)="limparErroServidor('valorLocacao')" />
+      @if (erroDo('valorLocacao'); as m) { <small class="erro">{{ m }}</small> }
+    </div>
+
+    <label class="check campo-full">
+      <input type="checkbox" formControlName="disponivel" />
+      <span>Disponível para locação</span>
+    </label>
+
+    <div class="acoes campo-full">
+      <a routerLink="/jogos" class="btn">Cancelar</a>
+      <button type="submit" class="btn btn-primario" [disabled]="salvando()">
+        {{ salvando() ? 'Salvando...' : editando ? 'Salvar alterações' : 'Cadastrar' }}
+      </button>
+    </div>
+  </form>
+}

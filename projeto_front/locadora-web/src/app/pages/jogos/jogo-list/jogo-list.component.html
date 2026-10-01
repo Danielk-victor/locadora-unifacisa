@@ -1,0 +1,79 @@
+<div class="page-head">
+  <div>
+    <h1>Jogos</h1>
+    <p class="muted">{{ itens().length }} cadastrad{{ itens().length === 1 ? 'o' : 'os' }}</p>
+  </div>
+  <a routerLink="/jogos/novo" class="btn btn-primario">+ Novo jogo</a>
+</div>
+
+<div class="toolbar">
+  <input
+    type="search"
+    placeholder="Buscar por título, gênero ou plataforma..."
+    [value]="busca()"
+    (input)="busca.set($any($event.target).value)"
+  />
+</div>
+
+@if (carregando()) {
+  <div class="estado">Carregando...</div>
+} @else if (erro()) {
+  <div class="estado estado-erro">
+    <p>{{ erro() }}</p>
+    <button type="button" class="btn" (click)="carregar()">Tentar novamente</button>
+  </div>
+} @else if (filtrados().length === 0) {
+  <div class="estado">
+    <p>{{ itens().length === 0 ? 'Nenhum jogo cadastrado ainda.' : 'Nada encontrado para a busca.' }}</p>
+    @if (itens().length === 0) {
+      <a routerLink="/jogos/novo" class="btn btn-primario">Cadastrar o primeiro</a>
+    }
+  </div>
+} @else {
+  <div class="tabela-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Gênero</th>
+          <th>Plataforma</th>
+          <th>Ano</th>
+          <th>Valor</th>
+          <th>Status</th>
+          <th class="col-acoes">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (i of filtrados(); track i.id) {
+          <tr>
+            <td class="forte">{{ i.titulo }}</td>
+            <td>{{ i.genero }}</td>
+            <td>{{ i.plataforma }}</td>
+            <td>{{ i.anoLancamento }}</td>
+            <td>{{ i.valorLocacao | currency: 'BRL' }}</td>
+            <td>
+              <span class="chip" [class.chip-ok]="i.disponivel" [class.chip-off]="!i.disponivel">
+                {{ i.disponivel ? 'Disponível' : 'Locado' }}
+              </span>
+            </td>
+            <td class="col-acoes">
+              <a [routerLink]="['/jogos', i.id, 'editar']" class="btn btn-sm">Editar</a>
+              <button type="button" class="btn btn-sm btn-perigo" (click)="pedirExclusao(i)">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (paraExcluir(); as item) {
+  <app-confirmar-dialogo
+    [mensagem]="'Deseja realmente excluir &quot;' + item.titulo + '&quot;? Esta ação não pode ser desfeita.'"
+    [processando]="excluindo()"
+    (confirmar)="confirmarExclusao()"
+    (cancelar)="cancelarExclusao()"
+  />
+}
