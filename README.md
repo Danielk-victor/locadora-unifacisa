@@ -3,7 +3,7 @@
 Sistema de locadora de filmes e jogos: back-end em Spring Boot (API REST) e front-end em Angular.
 
 ## Integrantes
-- Daniel Victor Bezerra Matias de Freitas, matrícula: XXXXXXXX
+- Daniel Victor Bezerra Matias de Freitas, matrícula: 2525050021
 
 ## Como rodar
 1. Back-end: abra `projeto_back/locadora-api` no IntelliJ e execute `LocadoraApplication` (porta 8080).
